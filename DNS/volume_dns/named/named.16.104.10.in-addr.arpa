@@ -1,0 +1,19 @@
+$TTL 86400
+
+@       IN SOA  srv-docker1.belem.local. root.belem.local. (
+                                20170423 ; serial
+                                    3600 ; refresh
+                                    1800 ; retry
+                                  604800 ; expire
+                                   86400 ; minimum
+)
+@               IN      NS      srv-docker1.belem.local.
+@               IN      PTR     belem.local.
+srv-docker1         IN      A       10.104.16.1
+srv-docker2         IN      A       10.104.16.2
+srv-docker3         IN      A       10.104.16.3
+wp.swarm.pcp	    IN      A       10.104.16.1
+1             IN      PTR     srv-docker1.belem.local.
+2             IN      PTR     srv-docker2.belem.local.
+3             IN      PTR     srv-docker3.belem.local.
+1		IN	PTR	wp.swarm.pcp.
