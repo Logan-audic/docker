@@ -1,0 +1,22 @@
+version: '3'
+services:
+  centos:
+    image: ghcr.io/logan-audic/centos
+    volumes:
+      - /srv/docker_swarm/configuration/DNS/volume_dns/:/volume/
+    ports:
+      - "53:53/udp"
+    command: /usr/sbin/named -u named -g
+    deploy:
+      mode: replicated
+      replicas: 3
+    networks:
+      - dns
+networks:
+  dns:
+    driver: overlay
+    external: false
+    ipam:
+      driver: default
+      config:
+        - subnet: ${IPV4_NETWORK:-10.0.30}.0/24

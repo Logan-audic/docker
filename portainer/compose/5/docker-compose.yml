@@ -5,7 +5,7 @@ services:
     ports:
       - "80:80"
     networks:
-      - swarm
+      - web
     volumes:
       - /srv/page/:/var/www/html/
 
@@ -13,16 +13,7 @@ services:
       mode: replicated
       replicas: 1
 
-  centos:
-    image: ghcr.io/logan-audic/centos
-    volumes:
-      - /srv/docker_swarm/configuration/DNS/volume_dns/:/volume/
-    ports:
-      - "53:53/udp"
-    command: /usr/sbin/named -u named -g
-    deploy:
-      mode: replicated
-      replicas: 3
+
 
   wordpress:
     image: ghcr.io/logan-audic/wordpress
@@ -30,7 +21,7 @@ services:
       - /srv/docker_swarm/configuration/wordpress/:/var/www/html/index.html
       - /srv/docker_swarm/configuration/mysql/:/var/lib/mysql
     networks:
-      - swarm
+      - web
     deploy:
       mode: replicated
       replicas: 1
@@ -47,12 +38,12 @@ services:
       - MYSQL_PASSWORD=user_db
       - MYSQL_DATABASE=mysql_db
     networks:
-      - swarm
+      - web
     deploy:
       mode: replicated
       replicas: 1
 
 networks:
-  swarm:
+  web:
     driver: overlay
     external: false
